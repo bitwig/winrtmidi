@@ -51,7 +51,7 @@ namespace WinRT
         };
 
     internal:
-        WinRTMidiInPort();
+        WinRTMidiInPort(void* user);
         virtual WinRTMidiErrorType OpenPort(Platform::String^ id) override;
 
         // needs to be internal as MidiInMessageReceivedCallbackType is not a WinRT type
@@ -65,6 +65,7 @@ namespace WinRT
         long long mLastMessageTime;
         bool mFirstMessage;
         WinRTMidiInCallback mMessageReceivedCallback;
+        void* mUser = nullptr;
     };
 
     ref class WinRTMidiOutPort sealed : public WinRTMidiPort

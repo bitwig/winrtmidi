@@ -115,8 +115,9 @@ WinRTMidiErrorType WinRTMidiPort::GetError()
     return mError;
 }
 
-WinRTMidiInPort::WinRTMidiInPort()
+WinRTMidiInPort::WinRTMidiInPort(void* user)
     : mMessageReceivedCallback(nullptr)
+   , mUser(user)
 {
 }
 
@@ -184,7 +185,7 @@ void WinRTMidiInPort::OnMidiInMessageReceived(MidiInPort^ sender, MidiMessageRec
         // Get pointer to iBuffer bytes 
         byte* pData;
         pBufferByteAccess->Buffer(&pData);
-        mMessageReceivedCallback((WinRTMidiInPortPtr) this, timestamp, pData, buffer->Length);
+        mMessageReceivedCallback(mUser, timestamp, pData, buffer->Length);
     }
 }
 
